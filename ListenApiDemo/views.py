@@ -1,9 +1,7 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
 from secrets import MASHAPE_KEY
 import requests
-
-# Filters: "sort by date / relevance" and "search episodes / podcasts".
 
 @require_http_methods(["GET"])
 def search(request):
@@ -16,4 +14,6 @@ def search(request):
         "Accept": "application/json"
       }
     )
+    if response.headers['X-Ratelimit-full-text-search-quota-Remaining'] == 0:
+        return HttpResponse(status=429)
     return JsonResponse(response.json())
