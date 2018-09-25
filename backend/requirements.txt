@@ -1,6 +1,7 @@
 certifi==2018.8.24
 chardet==3.0.4
 Django==2.1.1
+django-cors-headers==2.4.0
 idna==2.7
 pytz==2018.5
 requests==2.19.1
