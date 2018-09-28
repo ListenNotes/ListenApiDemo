@@ -43,7 +43,9 @@ class App extends Component {
         search: "",
         data: {},
         sortByDate: false,
-        searchEpisodes: true
+        searchEpisodes: true,
+        quotaExceeded: false,
+        errorOccurred: false
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
