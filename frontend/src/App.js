@@ -5,6 +5,43 @@ import axios from 'axios'
 const BACKEND_ROOT_URL = "http://localhost:8000/"
 
 class EpisodeResult extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            title: this.props.data.title_original,
+            podcastTitle: this.props.data.podcast_title_original,
+            publisher: this.props.data.publisher_original,
+            thumbnail: this.props.data.thumbnail,
+            audio: this.props.data.audio,
+            audioLength: this.props.data.audio_length,
+            rss: this.props.data.rss,
+            listennotesUrl: this.props.data.listennotes_url,
+            itunesId: this.props.data.itunes_id,
+            description: this.props.data.description_original
+        }
+    }
+
+    render() {
+        const itunesUrl = "https://itunes.apple.com/us/podcast/id" + this.state.itunesId
+        return (
+            <div className="result episode">
+              <a href={this.state.listennotesUrl}>
+                  <h1>{this.state.title}</h1>
+              </a>
+              <img alt={this.state.title} src={this.state.thumbnail} />
+              <p>{this.state.podcastTitle}</p>
+              <p>By {this.state.publisher}</p>
+              <p>{this.state.description}</p>
+              <a href={this.state.audio}>Audio</a>
+              <a href={itunesUrl}>iTunes</a>
+              <a href={this.state.rss}>RSS</a>
+              <audio controls>
+                <source src={this.state.audio} type="audio/mpeg"/>
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+        )
+    }
 }
 
 class PodcastResult extends Component {
@@ -123,7 +160,11 @@ class App extends Component {
 
   render() {
     const resultElements = this.state.data.results ? this.state.data.results.map((d) => {
-      return <PodcastResult key={d.id} data={d}/>
+      if (this.state.searchType === "episode") {
+        return <EpisodeResult key={d.id} data={d}/>
+      } else if (this.state.searchType === "podcast") {
+        return <PodcastResult key={d.id} data={d}/>
+      }
     }) : []
     const quotaExceededMessage = this.state.quotaExceeded ? (<p>Quota exceeded.</p>) : null
     const errorOccurredMessage = this.state.errorOccurred ? (<p>An error occurred.</p>) : null
