@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.less';
 import axios from 'axios'
 
-const BACKEND_URL = "http://localhost:8000/"
+const BACKEND_ROOT_URL = "http://localhost:8000/"
 
 class EpisodeResult extends Component {
 }
@@ -42,13 +42,37 @@ class App extends Component {
     this.state = {
         search: "",
         data: {},
-        sortByDate: false,
-        searchEpisodes: true,
+        sortByDate: "0",
+        searchType: "episode",
         quotaExceeded: false,
         errorOccurred: false
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleTypeChange = this.handleTypeChange.bind(this)
+    this.handleSortByChange = this.handleSortByChange.bind(this)
+  }
+
+  handleTypeChange(e) {
+      this.setState({
+          search: this.state.search,
+          data: this.state.data,
+          sortByDate: this.state.sortByDate,
+          searchType: e.target.value,
+          quotaExceeded: this.state.quotaExceeded,
+          errorOccurred: this.state.errorOccurred
+      })
+  }
+
+  handleSortByChange(e) {
+      this.setState({
+          search: this.state.search,
+          data: this.state.data,
+          sortByDate: e.target.value,
+          searchType: this.state.searchType,
+          quotaExceeded: this.state.quotaExceeded,
+          errorOccurred: this.state.errorOccurred
+      })
   }
 
   handleChange(e) {
@@ -63,7 +87,8 @@ class App extends Component {
   }
 
   handleClick() {
-    axios.get(BACKEND_URL + "search/?q=" + this.state.search)
+    const requestUrl = BACKEND_ROOT_URL + "search/?q=" + this.state.search + "&sort_by_date=" + this.state.sortByDate + "&type=" + this.state.searchType
+    axios.get(requestUrl)
       .then(response => this.setState({
         search: this.state.search,
         data: response.data,
@@ -98,7 +123,7 @@ class App extends Component {
 
   render() {
     const resultElements = this.state.data.results ? this.state.data.results.map((d) => {
-      return <PodcastResult key={d.itunes_id} data={d}/>
+      return <PodcastResult key={d.id} data={d}/>
     }) : []
     const quotaExceededMessage = this.state.quotaExceeded ? (<p>Quota exceeded.</p>) : null
     const errorOccurredMessage = this.state.errorOccurred ? (<p>An error occurred.</p>) : null
@@ -107,8 +132,18 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Listen API Demo</h1>
         </header>
+        <div onChange={this.handleTypeChange}>
+          <input type="radio" defaultChecked value="episode" id="episodeButton" name="type"/>
+          <label htmlFor="episodeButton">Episode</label>
+          <input type="radio" value="podcast" id="podcastButton" name="type"/>
+          <label htmlFor="podcastButton">Podcast</label>
+        </div>
+        <select onChange={this.handleSortByChange}>
+          <option value="0">Relevance</option>
+          <option value="1">Date</option>
+        </select>
         <input onChange={this.handleChange} type="text" placeholder="Search" value={this.state.search}/>
-        <button className='button' onClick={this.handleClick}>
+        <button className='button' type="submit" onClick={this.handleClick}>
           Search
         </button>
         <div>
