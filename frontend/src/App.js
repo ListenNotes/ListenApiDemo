@@ -43,7 +43,9 @@ class App extends Component {
         search: "",
         data: {},
         sortByDate: false,
-        searchEpisodes: true
+        searchEpisodes: true,
+        quotaExceeded: false,
+        errorOccurred: false
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -54,24 +56,52 @@ class App extends Component {
           search: e.target.value,
           data: this.state.data,
           sortByDate: this.state.sortByDate,
-          searchEpisodes: this.state.searchEpisodes
+          searchEpisodes: this.state.searchEpisodes,
+          quotaExceeded: this.state.quotaExceeded,
+          errorOccurred: this.state.errorOccurred
       })
   }
 
   handleClick() {
     axios.get(BACKEND_URL + "search/?q=" + this.state.search)
-        .then(response => this.setState({
+      .then(response => this.setState({
+        search: this.state.search,
+        data: response.data,
+        sortByDate: this.state.sortByDate,
+        searchEpisodes: this.state.searchEpisodes,
+        quotaExceeded: false,
+        errorOccurred: false
+      }))
+      .catch(error => {
+        if (error.response.status === 429) {
+          this.setState({
             search: this.state.search,
-            data: response.data,
+            data: [],
             sortByDate: this.state.sortByDate,
-            searchEpisodes: this.state.searchEpisodes
-        }))
+            searchEpisodes: this.state.searchEpisodes,
+            quotaExceeded: true,
+            errorOccurred: false
+          })
+        } else {
+          console.log(error.response)
+          this.setState({
+            search: this.state.search,
+            data: [],
+            sortByDate: this.state.sortByDate,
+            searchEpisodes: this.state.searchEpisodes,
+            quotaExceeded: false,
+            errorOccurred: true
+          })
+        }
+      })
   }
 
   render() {
     const resultElements = this.state.data.results ? this.state.data.results.map((d) => {
       return <PodcastResult key={d.itunes_id} data={d}/>
     }) : []
+    const quotaExceededMessage = this.state.quotaExceeded ? (<p>Quota exceeded.</p>) : null
+    const errorOccurredMessage = this.state.errorOccurred ? (<p>An error occurred.</p>) : null
     return (
       <div className="App">
         <header className="App-header">
@@ -79,9 +109,11 @@ class App extends Component {
         </header>
         <input onChange={this.handleChange} type="text" placeholder="Search" value={this.state.search}/>
         <button className='button' onClick={this.handleClick}>
-          Click Me
+          Search
         </button>
         <div>
+          {quotaExceededMessage}
+          {errorOccurredMessage}
           {resultElements}
         </div>
       </div>
