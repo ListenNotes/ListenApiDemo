@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.less';
 import axios from 'axios'
 
 const BACKEND_URL = "http://localhost:8000/"
@@ -14,17 +14,17 @@ class PodcastResult extends Component {
             title: this.props.data.title_original,
             thumbnail: this.props.data.thumbnail,
             rss: this.props.data.rss,
-            listennotes_url: this.props.data.listennotes_url,
-            itunes_id: this.props.data.itunes_id,
+            listennotesUrl: this.props.data.listennotes_url,
+            itunesId: this.props.data.itunes_id,
             description: this.props.data.description_original
         }
     }
 
     render() {
-        const itunesUrl = "https://itunes.apple.com/us/podcast/id" + this.state.itunes_id
+        const itunesUrl = "https://itunes.apple.com/us/podcast/id" + this.state.itunesId
         return (
             <div className="result podcast">
-              <a href={this.state.listennotes_url}>
+              <a href={this.state.listennotesUrl}>
                   <h1>{this.state.title}</h1>
               </a>
               <img alt={this.state.title} src={this.state.thumbnail} />
@@ -42,8 +42,8 @@ class App extends Component {
     this.state = {
         search: "",
         data: {},
-        sort_by_date: false,
-        search_episodes: true
+        sortByDate: false,
+        searchEpisodes: true
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -53,8 +53,8 @@ class App extends Component {
       this.setState({
           search: e.target.value,
           data: this.state.data,
-          sort_by_date: this.state.sort_by_date,
-          search_episodes: this.state.search_episodes
+          sortByDate: this.state.sortByDate,
+          searchEpisodes: this.state.searchEpisodes
       })
   }
 
@@ -63,18 +63,15 @@ class App extends Component {
         .then(response => this.setState({
             search: this.state.search,
             data: response.data,
-            sort_by_date: this.state.sort_by_date,
-            search_episodes: this.state.search_episodes
+            sortByDate: this.state.sortByDate,
+            searchEpisodes: this.state.searchEpisodes
         }))
   }
 
   render() {
-    var resultElements = [];
-    if (this.state.data.results) {
-        resultElements = this.state.data.results.map((d) => {
-          return <PodcastResult key={d.itunes_id} data={d}/>
-        })
-    }
+    const resultElements = this.state.data.results ? this.state.data.results.map((d) => {
+      return <PodcastResult key={d.itunes_id} data={d}/>
+    }) : []
     return (
       <div className="App">
         <header className="App-header">
