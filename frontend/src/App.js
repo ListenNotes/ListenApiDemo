@@ -3,6 +3,7 @@ import './App.less';
 import axios from 'axios'
 
 const BACKEND_ROOT_URL = process.env.REACT_APP_BACKEND_ROOT_URL || 'http://localhost:8000/'
+const RESULTS_PER_PAGE = 10
 
 class EpisodeResult extends Component {
     constructor(props) {
@@ -79,6 +80,7 @@ class App extends Component {
     this.state = {
         search: '',
         data: {},
+        offset: 0,
         sortByDate: '0',
         searchType: 'episode',
         quotaExceeded: false,
@@ -88,11 +90,47 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleTypeChange = this.handleTypeChange.bind(this)
     this.handleSortByChange = this.handleSortByChange.bind(this)
+    this.handlePage = this.handlePage.bind(this)
+    this.search = this.search.bind(this)
   }
 
   handleTypeChange(e) {
       const newValue = e.target.value
       this.setState(prevState => ({...prevState, searchType: newValue}))
+  }
+
+  search(requestUrl) {
+    axios.get(requestUrl)
+      .then(response => {
+      this.setState(prevState => ({...prevState,
+        data: response.data,
+        offset: 0,
+        quotaExceeded: false,
+        errorOccurred: false
+      }))})
+      .catch(error => {
+        if (error.response.status === 429) {
+          this.setState(prevState => ({
+            data: [],
+            offset: 0,
+            quotaExceeded: true,
+            errorOccurred: false
+          }))
+        } else {
+          console.log(error.response)
+          this.setState(prevState => ({
+            data: [],
+            offset: 0,
+            quotaExceeded: false,
+            errorOccurred: true
+          }))
+        }
+      })
+  }
+
+  handlePage(offset) {
+    const requestUrl = `${BACKEND_ROOT_URL}search/?q=${this.state.search}&sort_by_date=${this.state.sortByDate}&type=${this.state.searchType}&offset=${this.state.data.next_offset}`
+    this.search(requestUrl)
   }
 
   handleSortByChange(e) {
@@ -107,38 +145,22 @@ class App extends Component {
 
   handleClick() {
     const requestUrl = `${BACKEND_ROOT_URL}search/?q=${this.state.search}&sort_by_date=${this.state.sortByDate}&type=${this.state.searchType}`
-    axios.get(requestUrl)
-      .then(response => this.setState(prevState => ({...prevState,
-        data: response.data,
-        quotaExceeded: false,
-        errorOccurred: false
-      })))
-      .catch(error => {
-        if (error.response.status === 429) {
-          this.setState(prevState => ({
-            data: [],
-            quotaExceeded: true,
-            errorOccurred: false
-          }))
-        } else {
-          console.log(error.response)
-          this.setState(prevState => ({
-            data: [],
-            quotaExceeded: false,
-            errorOccurred: true
-          }))
-        }
-      })
+    this.search(requestUrl)
   }
 
   render() {
     const resultElements = this.state.data.results ? this.state.data.results.map((d) => {
-      if (this.state.searchType === 'episode') {
+      if (d.audio) {
         return <EpisodeResult key={d.id} data={d}/>
-      } else if (this.state.searchType === 'podcast') {
+      } else {
         return <PodcastResult key={d.id} data={d}/>
       }
     }) : []
+    const nextPageElement = this.state.data.results ? (
+      <span onClick={() => this.handlePage()}>
+        Next page ({this.state.data.next_offset / RESULTS_PER_PAGE + 1} of {(this.state.data.total / RESULTS_PER_PAGE).toFixed()})
+      </span>
+    ) : null
     const quotaExceededMessage = this.state.quotaExceeded ? (<p>Quota exceeded.</p>) : null
     const errorOccurredMessage = this.state.errorOccurred ? (<p>An error occurred.</p>) : null
     return (
@@ -164,6 +186,7 @@ class App extends Component {
           {quotaExceededMessage}
           {errorOccurredMessage}
           {resultElements}
+          {nextPageElement}
         </div>
       </div>
     );

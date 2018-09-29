@@ -12,6 +12,7 @@ def search(request):
     query = request.GET.get("q")
     sort_by_date = request.GET.get("sort_by_date")
     result_type = request.GET.get("type")
+    offset = request.GET.get("offset", "0")
 
     if cache.get("quota_exceeded", False):
         head_response = requests.head("https://listennotes.p.mashape.com/api/v1/search",
@@ -25,7 +26,7 @@ def search(request):
         else:
             cache.set("quota_exceeded", False)
 
-    response = requests.get("https://listennotes.p.mashape.com/api/v1/search?q={}&sort_by_date={}&type={}".format(query, sort_by_date, result_type),
+    response = requests.get("https://listennotes.p.mashape.com/api/v1/search?q={}&sort_by_date={}&type={}&offset={}".format(query, sort_by_date, result_type, offset),
             headers={
                 "X-Mashape-Key": MASHAPE_KEY,
                 "Accept": "application/json"
