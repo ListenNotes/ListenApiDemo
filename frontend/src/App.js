@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.less';
 import axios from 'axios'
 
-const BACKEND_ROOT_URL = "http://localhost:8000/"
+const BACKEND_ROOT_URL = process.env.REACT_APP_BACKEND_ROOT_URL || 'http://localhost:8000/'
 
 class EpisodeResult extends Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class EpisodeResult extends Component {
     }
 
     render() {
-        const itunesUrl = "https://itunes.apple.com/us/podcast/id" + this.state.itunesId
+        const itunesUrl = `https://itunes.apple.com/us/podcast/id${this.state.itunesId}`
         return (
             <div className="result episode">
               <a href={this.state.listennotesUrl}>
@@ -58,7 +58,7 @@ class PodcastResult extends Component {
     }
 
     render() {
-        const itunesUrl = "https://itunes.apple.com/us/podcast/id" + this.state.itunesId
+        const itunesUrl = `https://itunes.apple.com/us/podcast/id${this.state.itunesId}`
         return (
             <div className="result podcast">
               <a href={this.state.listennotesUrl}>
@@ -77,10 +77,10 @@ class App extends Component {
   constructor () {
     super()
     this.state = {
-        search: "",
+        search: '',
         data: {},
-        sortByDate: "0",
-        searchType: "episode",
+        sortByDate: '0',
+        searchType: 'episode',
         quotaExceeded: false,
         errorOccurred: false
     }
@@ -91,78 +91,51 @@ class App extends Component {
   }
 
   handleTypeChange(e) {
-      this.setState({
-          search: this.state.search,
-          data: this.state.data,
-          sortByDate: this.state.sortByDate,
-          searchType: e.target.value,
-          quotaExceeded: this.state.quotaExceeded,
-          errorOccurred: this.state.errorOccurred
-      })
+      const newValue = e.target.value
+      this.setState(prevState => ({...prevState, searchType: newValue}))
   }
 
   handleSortByChange(e) {
-      this.setState({
-          search: this.state.search,
-          data: this.state.data,
-          sortByDate: e.target.value,
-          searchType: this.state.searchType,
-          quotaExceeded: this.state.quotaExceeded,
-          errorOccurred: this.state.errorOccurred
-      })
+      const newValue = e.target.value
+      this.setState(prevState => ({...prevState, sortByDate: newValue}))
   }
 
   handleChange(e) {
-      this.setState({
-          search: e.target.value,
-          data: this.state.data,
-          sortByDate: this.state.sortByDate,
-          searchEpisodes: this.state.searchEpisodes,
-          quotaExceeded: this.state.quotaExceeded,
-          errorOccurred: this.state.errorOccurred
-      })
+      const newValue = e.target.value
+      this.setState(prevState => ({...prevState, search: newValue}))
   }
 
   handleClick() {
-    const requestUrl = BACKEND_ROOT_URL + "search/?q=" + this.state.search + "&sort_by_date=" + this.state.sortByDate + "&type=" + this.state.searchType
+    const requestUrl = `${BACKEND_ROOT_URL}search/?q=${this.state.search}&sort_by_date=${this.state.sortByDate}&type=${this.state.searchType}`
     axios.get(requestUrl)
-      .then(response => this.setState({
-        search: this.state.search,
+      .then(response => this.setState(prevState => ({...prevState,
         data: response.data,
-        sortByDate: this.state.sortByDate,
-        searchEpisodes: this.state.searchEpisodes,
         quotaExceeded: false,
         errorOccurred: false
-      }))
+      })))
       .catch(error => {
         if (error.response.status === 429) {
-          this.setState({
-            search: this.state.search,
+          this.setState(prevState => ({
             data: [],
-            sortByDate: this.state.sortByDate,
-            searchEpisodes: this.state.searchEpisodes,
             quotaExceeded: true,
             errorOccurred: false
-          })
+          }))
         } else {
           console.log(error.response)
-          this.setState({
-            search: this.state.search,
+          this.setState(prevState => ({
             data: [],
-            sortByDate: this.state.sortByDate,
-            searchEpisodes: this.state.searchEpisodes,
             quotaExceeded: false,
             errorOccurred: true
-          })
+          }))
         }
       })
   }
 
   render() {
     const resultElements = this.state.data.results ? this.state.data.results.map((d) => {
-      if (this.state.searchType === "episode") {
+      if (this.state.searchType === 'episode') {
         return <EpisodeResult key={d.id} data={d}/>
-      } else if (this.state.searchType === "podcast") {
+      } else if (this.state.searchType === 'podcast') {
         return <PodcastResult key={d.id} data={d}/>
       }
     }) : []
