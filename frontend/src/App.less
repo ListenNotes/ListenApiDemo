@@ -12,3 +12,49 @@
       font-size: 2.5em;
   }
 }
+
+.results {
+    overflow: auto;
+}
+
+audio {
+    margin: 10px 10%;
+}
+
+.result {
+    display: inline-block;
+    float: left;
+    width: 30%;
+    margin: 1%;
+    border: 1px solid black;
+    border-radius: 2px;
+    padding: 10px;
+    box-sizing: border-box;
+
+    &-creator {
+        overflow: auto;
+
+        &-thumbnail {
+            width: 25%;
+            display: inline-block;
+            float: left;
+        }
+
+        &-names {
+            width: 75%;
+            display: inline-block;
+            float: left;
+
+            p {
+                margin: 5px;
+                text-align: left;
+            }
+        }
+    }
+
+    &-footer {
+        a {
+            padding: 10px 5px;
+        }
+    }
+}

@@ -27,19 +27,25 @@ class EpisodeResult extends Component {
         return (
             <div className="result episode">
               <a className="title" target="_blank" href={this.state.listennotesUrl}>
-                  <h1>{this.state.title}</h1>
+                  <h3>{this.state.title}</h3>
               </a>
-              <img className="thumbnail" alt={this.state.title} src={this.state.thumbnail} />
-              <p className="podcast-title">{this.state.podcastTitle}</p>
-              <p className="publisher">By {this.state.publisher}</p>
+              <div className="result-creator">
+                <img className="result-creator-thumbnail" alt={this.state.title} src={this.state.thumbnail} />
+                <div className="result-creator-names">
+                  <p className="podcast-title">{this.state.podcastTitle}</p>
+                  <p className="publisher">By {this.state.publisher}</p>
+                </div>
+              </div>
               <p className="description">{this.state.description}</p>
-              <a className="bottom-link" href={this.state.audio}>Audio</a>
-              <a className="bottom-link" target="_blank" href={itunesUrl}>iTunes</a>
-              <a className="bottom-link" target="_blank" href={this.state.rss}>RSS</a>
               <audio controls>
                 <source src={this.state.audio} type="audio/mpeg"/>
                 Your browser does not support the audio element.
               </audio>
+              <div className="result-footer">
+                <a href={this.state.audio}>Audio</a>
+                <a target="_blank" href={itunesUrl}>iTunes</a>
+                <a target="_blank" href={this.state.rss}>RSS</a>
+              </div>
             </div>
         )
     }
@@ -64,13 +70,19 @@ class PodcastResult extends Component {
         return (
             <div className="result podcast">
               <a className="title" target="_blank" href={this.state.listennotesUrl}>
-                  <h1>{this.state.title}</h1>
+                  <h3>{this.state.title}</h3>
               </a>
-              <p className="publisher">By {this.state.publisher}</p>
-              <img className="thumbnail" alt={this.state.title} src={this.state.thumbnail} />
+              <div className="result-creator">
+                <img className="result-creator-thumbnail" alt={this.state.title} src={this.state.thumbnail} />
+                <div className="result-creator-names">
+                  <p className="publisher">By {this.state.publisher}</p>
+                </div>
+              </div>
               <p className="description">{this.state.description}</p>
-              <a className="bottom-link" target="_blank" href={itunesUrl}>iTunes</a>
-              <a className="bottom-link" target="_blank" href={this.state.rss}>RSS</a>
+              <div className="result-footer">
+                <a className="bottom-link" target="_blank" href={itunesUrl}>iTunes</a>
+                <a className="bottom-link" target="_blank" href={this.state.rss}>RSS</a>
+              </div>
             </div>
         )
     }
@@ -189,10 +201,12 @@ class App extends Component {
             Search
           </button>
         </form>
-        <div>
+        <div className="results">
           {quotaExceededMessage}
           {errorOccurredMessage}
           {resultElements}
+        </div>
+        <div>
           {nextPageElement}
         </div>
       </div>
