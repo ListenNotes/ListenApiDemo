@@ -4,11 +4,11 @@
 @margin-1x: 5px;
 @margin-2x: 10px;
 
-@black: #000000;
-@dark-grey: #CCCCCC;
-@grey: #EEEEEE;
-@light-grey: #F4F4F4;
-@white: #FFFFFF;
+@border-color: #000000;
+@shadow-color: #CCCCCC;
+@button-color: #EEEEEE;
+@background-color: #F4F4F4;
+@result-color: #FFFFFF;
 
 html {
     height: 100%;
@@ -16,7 +16,7 @@ html {
 
 body {
     min-height: 100%;
-    background-color: @light-grey;
+    background-color: @background-color;
 }
 
 #root {
@@ -54,14 +54,14 @@ audio {
 
 .search-result {
     text-align: left;
-    background-color: @white;
+    background-color: @result-color;
     display: inline-block;
     box-sizing: border-box;
     float: left;
     width: 80%;
     margin: @margin-2x 10%;
     padding: @margin-2x;
-    border: 1px solid @black;
+    border: 1px solid @border-color;
     border-radius: 4px;
 
     @media @tablet {
@@ -83,7 +83,7 @@ audio {
     &-title {
         display: inline-block;
         font-size: 1.5em;
-        color: @black;
+        color: @border-color;
         margin-bottom: @margin-2x;
     }
 
@@ -140,7 +140,7 @@ audio {
         box-shadow: 0px 5px 1px rgba(0, 0, 0, 0.14);
         margin: @margin-2x 0;
         padding: 0 @margin-2x;
-        border: 1px grey;
+        border: 0;
         box-sizing: border-box;
         font-size: 14px;
 
@@ -164,8 +164,8 @@ audio {
         padding: 0px;
         margin: @margin-2x 0;
         border: 0px;
-        background-color: @grey;
-        box-shadow: 0px 5px 1px @dark-grey;
+        background-color: @button-color;
+        box-shadow: 0px 5px 1px @shadow-color;
 
         @media @tablet {
             width: 15%;
