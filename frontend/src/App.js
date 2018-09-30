@@ -26,20 +26,26 @@ class EpisodeResult extends Component {
         const itunesUrl = `https://itunes.apple.com/us/podcast/id${this.state.itunesId}`
         return (
             <div className="result episode">
-              <a target="_blank" href={this.state.listennotesUrl}>
-                  <h1>{this.state.title}</h1>
+              <a className="title" target="_blank" href={this.state.listennotesUrl}>
+                  <h3>{this.state.title}</h3>
               </a>
-              <img alt={this.state.title} src={this.state.thumbnail} />
-              <p>{this.state.podcastTitle}</p>
-              <p>By {this.state.publisher}</p>
-              <p>{this.state.description}</p>
-              <a href={this.state.audio}>Audio</a>
-              <a target="_blank" href={itunesUrl}>iTunes</a>
-              <a target="_blank" href={this.state.rss}>RSS</a>
+              <div className="result-creator">
+                <img className="result-creator-thumbnail" alt={this.state.title} src={this.state.thumbnail} />
+                <div className="result-creator-names">
+                  <p className="podcast-title">{this.state.podcastTitle}</p>
+                  <p className="publisher">By {this.state.publisher}</p>
+                </div>
+              </div>
+              <p className="description">{this.state.description}</p>
               <audio controls>
                 <source src={this.state.audio} type="audio/mpeg"/>
                 Your browser does not support the audio element.
               </audio>
+              <div className="result-footer">
+                <a href={this.state.audio}>Audio</a>
+                <a target="_blank" href={itunesUrl}>iTunes</a>
+                <a target="_blank" href={this.state.rss}>RSS</a>
+              </div>
             </div>
         )
     }
@@ -50,6 +56,7 @@ class PodcastResult extends Component {
         super(props)
         this.state = {
             title: this.props.data.title_original,
+            publisher: this.props.data.publisher_original,
             thumbnail: this.props.data.thumbnail,
             rss: this.props.data.rss,
             listennotesUrl: this.props.data.listennotes_url,
@@ -62,13 +69,20 @@ class PodcastResult extends Component {
         const itunesUrl = `https://itunes.apple.com/us/podcast/id${this.state.itunesId}`
         return (
             <div className="result podcast">
-              <a target="_blank" href={this.state.listennotesUrl}>
-                  <h1>{this.state.title}</h1>
+              <a className="title" target="_blank" href={this.state.listennotesUrl}>
+                  <h3>{this.state.title}</h3>
               </a>
-              <img alt={this.state.title} src={this.state.thumbnail} />
-              <p>{this.state.description}</p>
-              <a target="_blank" href={itunesUrl}>iTunes</a>
-              <a target="_blank" href={this.state.rss}>RSS</a>
+              <div className="result-creator">
+                <img className="result-creator-thumbnail" alt={this.state.title} src={this.state.thumbnail} />
+                <div className="result-creator-names">
+                  <p className="publisher">By {this.state.publisher}</p>
+                </div>
+              </div>
+              <p className="description">{this.state.description}</p>
+              <div className="result-footer">
+                <a className="bottom-link" target="_blank" href={itunesUrl}>iTunes</a>
+                <a className="bottom-link" target="_blank" href={this.state.rss}>RSS</a>
+              </div>
             </div>
         )
     }
@@ -171,26 +185,28 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Listen API Demo</h1>
         </header>
-        <form onSubmit={this.handleSubmit}>
-          <div onChange={this.handleTypeChange}>
+        <form className="search-form" onSubmit={this.handleSubmit}>
+          <div className="search-form-type" onChange={this.handleTypeChange}>
             <input type="radio" defaultChecked value="episode" id="episodeButton" name="type"/>
             <label htmlFor="episodeButton">Episode</label>
             <input type="radio" value="podcast" id="podcastButton" name="type"/>
             <label htmlFor="podcastButton">Podcast</label>
           </div>
-          <select onChange={this.handleSortByChange}>
+          <select className="search-form-sort-by" onChange={this.handleSortByChange}>
             <option value="0">Relevance</option>
             <option value="1">Date</option>
           </select>
-          <input onChange={this.handleChange} type="text" placeholder="Search" value={this.state.search}/>
-          <button className='button' type="submit">
+          <input className="search-form-text" onChange={this.handleChange} type="text" placeholder="Search" value={this.state.search}/>
+          <button className="search-form-submit" type="submit">
             Search
           </button>
         </form>
-        <div>
+        <div className="results">
           {quotaExceededMessage}
           {errorOccurredMessage}
           {resultElements}
+        </div>
+        <div>
           {nextPageElement}
         </div>
       </div>
