@@ -172,6 +172,8 @@ class App extends Component {
         return <EpisodeResult key={d.id} data={d}/>
       } else if (this.state.resultType === 'podcast') {
         return <PodcastResult key={d.id} data={d}/>
+      } else {
+        return null
       }
     }) : []
     const nextPageElement = (this.state.data.results && this.state.data.next_offset <= this.state.data.total - this.state.data.total % RESULTS_PER_PAGE) ? (
