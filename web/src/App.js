@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.less';
 import axios from 'axios'
+import poweredByImage from './powered_by_listennotes.png';
 
 const BACKEND_ROOT_URL = process.env.REACT_APP_BACKEND_ROOT_URL || 'http://localhost:8000/'
 const RESULTS_PER_PAGE = 10
@@ -216,6 +217,9 @@ class App extends Component {
         <div className="next-page">
           {nextPageElement}
         </div>
+        <footer>
+          <img alt="Powered by ListenNotes" src={poweredByImage}/>
+        </footer>
       </div>
     );
   }
