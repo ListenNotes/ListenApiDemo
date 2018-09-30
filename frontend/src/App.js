@@ -174,9 +174,9 @@ class App extends Component {
         return <PodcastResult key={d.id} data={d}/>
       }
     }) : []
-    const nextPageElement = this.state.data.results ? (
+    const nextPageElement = (this.state.data.results && this.state.data.next_offset <= this.state.data.total - this.state.data.total % RESULTS_PER_PAGE) ? (
       <span onClick={() => this.handlePage()}>
-        Next page ({this.state.data.next_offset / RESULTS_PER_PAGE + 1} of {(this.state.data.total / RESULTS_PER_PAGE).toFixed()})
+        Next page ({this.state.data.next_offset / RESULTS_PER_PAGE + 1} of {(this.state.data.total / RESULTS_PER_PAGE + 1).toFixed()})
       </span>
     ) : null
     const quotaExceededMessage = this.state.quotaExceeded ? (<p>Quota exceeded.</p>) : null
@@ -187,20 +187,24 @@ class App extends Component {
           <h1 className="App-title">Listen API Demo</h1>
         </header>
         <form className="search-form" onSubmit={this.handleSubmit}>
-          <div className="search-form-type" onChange={this.handleTypeChange}>
+          <input className="search-form-text" onChange={this.handleChange} type="text" placeholder="This American Life" value={this.state.search}/>
+          <button className="search-form-submit" type="submit">
+            Search
+          </button>
+        <div className="search-form-type">
+          <span onChange={this.handleTypeChange}>
             <input type="radio" defaultChecked value="episode" id="episodeButton" name="type"/>
-            <label htmlFor="episodeButton">Episode</label>
+            <label htmlFor="episodeButton">Episodes</label>
             <input type="radio" value="podcast" id="podcastButton" name="type"/>
-            <label htmlFor="podcastButton">Podcast</label>
-          </div>
+            <label htmlFor="podcastButton">Podcasts</label>
+          </span>
+        <span>
           <select className="search-form-sort-by" onChange={this.handleSortByChange}>
             <option value="0">Relevance</option>
             <option value="1">Date</option>
           </select>
-          <input className="search-form-text" onChange={this.handleChange} type="text" placeholder="Search" value={this.state.search}/>
-          <button className="search-form-submit" type="submit">
-            Search
-          </button>
+        </span>
+        </div>
         </form>
         <div className="search-results">
           {quotaExceededMessage}
