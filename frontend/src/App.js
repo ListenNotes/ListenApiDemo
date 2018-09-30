@@ -8,6 +8,7 @@ const RESULTS_PER_PAGE = 10
 class EpisodeResult extends Component {
     constructor(props) {
         super(props)
+        const truncated_description = this.props.data.description_original.length > 200 ? this.props.data.description_original.substring(0, 197) + "..." : this.props.data.description_original
         this.state = {
             title: this.props.data.title_original,
             podcastTitle: this.props.data.podcast_title_original,
@@ -18,33 +19,33 @@ class EpisodeResult extends Component {
             rss: this.props.data.rss,
             listennotesUrl: this.props.data.listennotes_url,
             itunesId: this.props.data.itunes_id,
-            description: this.props.data.description_original
+            description: truncated_description
         }
     }
 
     render() {
         const itunesUrl = `https://itunes.apple.com/us/podcast/id${this.state.itunesId}`
         return (
-            <div className="result episode">
-              <a className="title" target="_blank" href={this.state.listennotesUrl}>
-                  <h3>{this.state.title}</h3>
+            <div className="search-result episode">
+              <a className="search-result-title" rel="noopener noreferrer" target="_blank" href={this.state.listennotesUrl}>
+                  {this.state.title}
               </a>
-              <div className="result-creator">
-                <img className="result-creator-thumbnail" alt={this.state.title} src={this.state.thumbnail} />
-                <div className="result-creator-names">
+              <div className="search-result-creator">
+                <img className="search-result-creator-thumbnail" alt={this.state.title} src={this.state.thumbnail} />
+                <div className="search-result-creator-names">
                   <p className="podcast-title">{this.state.podcastTitle}</p>
                   <p className="publisher">By {this.state.publisher}</p>
                 </div>
               </div>
-              <p className="description">{this.state.description}</p>
+              <p className="search-result-description">{this.state.description}</p>
               <audio controls>
                 <source src={this.state.audio} type="audio/mpeg"/>
                 Your browser does not support the audio element.
               </audio>
-              <div className="result-footer">
+              <div className="search-result-footer">
                 <a href={this.state.audio}>Audio</a>
-                <a target="_blank" href={itunesUrl}>iTunes</a>
-                <a target="_blank" href={this.state.rss}>RSS</a>
+                <a rel="noopener noreferrer" target="_blank" href={itunesUrl}>iTunes</a>
+                <a rel="noopener noreferrer" target="_blank" href={this.state.rss}>RSS</a>
               </div>
             </div>
         )
@@ -54,6 +55,7 @@ class EpisodeResult extends Component {
 class PodcastResult extends Component {
     constructor(props) {
         super(props)
+        const truncated_description = this.props.data.description_original.length > 200 ? this.props.data.description_original.substring(0, 197) + "..." : this.props.data.description_original
         this.state = {
             title: this.props.data.title_original,
             publisher: this.props.data.publisher_original,
@@ -61,27 +63,27 @@ class PodcastResult extends Component {
             rss: this.props.data.rss,
             listennotesUrl: this.props.data.listennotes_url,
             itunesId: this.props.data.itunes_id,
-            description: this.props.data.description_original
+            description: truncated_description
         }
     }
 
     render() {
         const itunesUrl = `https://itunes.apple.com/us/podcast/id${this.state.itunesId}`
         return (
-            <div className="result podcast">
-              <a className="title" target="_blank" href={this.state.listennotesUrl}>
-                  <h3>{this.state.title}</h3>
+            <div className="search-result podcast">
+              <a className="search-result-title" rel="noopener noreferrer" target="_blank" href={this.state.listennotesUrl}>
+                  {this.state.title}
               </a>
-              <div className="result-creator">
-                <img className="result-creator-thumbnail" alt={this.state.title} src={this.state.thumbnail} />
-                <div className="result-creator-names">
+              <div className="search-result-creator">
+                <img className="search-result-creator-thumbnail" alt={this.state.title} src={this.state.thumbnail} />
+                <div className="search-result-creator-names">
                   <p className="publisher">By {this.state.publisher}</p>
                 </div>
               </div>
-              <p className="description">{this.state.description}</p>
-              <div className="result-footer">
-                <a className="bottom-link" target="_blank" href={itunesUrl}>iTunes</a>
-                <a className="bottom-link" target="_blank" href={this.state.rss}>RSS</a>
+              <p className="search-result-description">{this.state.description}</p>
+              <div className="search-result-footer">
+                <a className="bottom-link" rel="noopener noreferrer" target="_blank" href={itunesUrl}>iTunes</a>
+                <a className="bottom-link" rel="noopener noreferrer" target="_blank" href={this.state.rss}>RSS</a>
               </div>
             </div>
         )
@@ -133,7 +135,6 @@ class App extends Component {
             errorOccurred: false
           }))
         } else {
-          console.error(error.response)
           this.setState(prevState => ({
             data: [],
             offset: 0,
@@ -201,12 +202,12 @@ class App extends Component {
             Search
           </button>
         </form>
-        <div className="results">
+        <div className="search-results">
           {quotaExceededMessage}
           {errorOccurredMessage}
           {resultElements}
         </div>
-        <div>
+        <div className="next-page">
           {nextPageElement}
         </div>
       </div>

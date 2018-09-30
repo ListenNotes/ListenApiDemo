@@ -1,10 +1,30 @@
+@desktop:   ~"only screen and (min-width: 960px)";
+@tablet:    ~"only screen and (min-width: 720px) and (max-width: 959px)";
+
+@margin-1x: 5px;
+@margin-2x: 10px;
+@margin-4x: 20px;
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    background-color: rgba(0,0,0,.03);
+}
+
+#root {
+    min-height: 100%;
+}
+
 .App {
   text-align: center;
 
   &-header {
       background-color: #222;
       height: 6em;
-      padding: 20px;
+      padding: @margin-4x;
       color: white;
   }
 
@@ -13,23 +33,44 @@
   }
 }
 
-.results {
+.search-results {
+    width: 100%;
     overflow: auto;
 }
 
-audio {
-    margin: 10px 10%;
+.next-page {
+    cursor: pointer;
+    margin-bottom: @margin-2x;
+    text-decoration: underline;
 }
 
-.result {
+audio {
+    margin: @margin-2x 2.5%;
+    width: 95%;
+}
+
+.search-result {
+    text-align: left;
+    background-color: white;
     display: inline-block;
-    float: left;
-    width: 30%;
-    margin: 1%;
-    border: 1px solid black;
-    border-radius: 2px;
-    padding: 10px;
     box-sizing: border-box;
+    float: left;
+    width: 80%;
+    margin: @margin-2x 10%;
+    padding: @margin-2x;
+    border: 1px solid black;
+    border-radius: 4px;
+
+    &-title {
+        display: inline-block;
+        font-size: 1.5em;
+        color: black;
+        margin-bottom: @margin-2x;
+    }
+
+    &-description {
+        min-height: 100px;
+    }
 
     &-creator {
         overflow: auto;
@@ -46,15 +87,36 @@ audio {
             float: left;
 
             p {
-                margin: 5px;
+                margin: @margin-1x;
                 text-align: left;
             }
         }
     }
 
     &-footer {
+        text-align: center;
         a {
-            padding: 10px 5px;
+            padding: @margin-2x @margin-1x;
+        }
+    }
+}
+
+@media @tablet {
+    .search-result {
+        width: 46%;
+        margin: 2%;
+        &-title {
+            height: 90px;
+        }
+    }
+}
+
+@media @desktop {
+    .search-result {
+        width: 31.3%;
+        margin: 1%;
+        &-title {
+            height: 90px;
         }
     }
 }
