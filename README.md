@@ -12,7 +12,15 @@ The backend is a simple Django backend makes requests to the Listen API. To run 
 
 ### React
 
-The frontend is a React project that makes requests to the django backend. To run it, from the `frontend` directory:
+The web frontend is a React project that makes requests to the django backend. To run it, from the `web` directory:
 
 1. Install requirements: `yarn install`
 1. Start the React app: `yarn start`
+
+![Desktop demo](https://github.com/wenbinf/ListenApiDemo/blob/master/resources/desktop.png)
+
+*On desktop*
+
+![Mobile demo](https://github.com/wenbinf/ListenApiDemo/blob/master/resources/mobile.png)
+
+*On mobile*
