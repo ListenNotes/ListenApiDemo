@@ -1,0 +1,16 @@
+matrix:
+  include:
+    - language: node_js
+      node_js: "8"
+      before_install: "cd frontend"
+      install: "yarn install"
+      script:
+        - yarn run lint
+      after_script: "cd .."
+    - language: python
+      python: "3.6"
+      before_install: "cd backend"
+      install: "pip install -r requirements.txt"
+      script:
+        - flake8 backend
+      after_script: "cd .."
