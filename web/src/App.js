@@ -9,7 +9,6 @@ const RESULTS_PER_PAGE = 10
 class EpisodeResult extends Component {
     constructor(props) {
         super(props)
-        const truncated_description = this.props.data.description_highlighted.length > 200 ? this.props.data.description_highlighted.substring(0, 197) + "..." : this.props.data.description_highlighted
         this.state = {
             title: this.props.data.title_highlighted,
             podcastTitle: this.props.data.podcast_title_highlighted,
@@ -20,7 +19,7 @@ class EpisodeResult extends Component {
             rss: this.props.data.rss,
             listennotesUrl: this.props.data.listennotes_url,
             itunesId: this.props.data.itunes_id,
-            description: truncated_description
+            description: this.props.data.description_highlighted
         }
     }
 
@@ -55,7 +54,6 @@ class EpisodeResult extends Component {
 class PodcastResult extends Component {
     constructor(props) {
         super(props)
-        const truncated_description = this.props.data.description_highlighted.length > 200 ? this.props.data.description_highlighted.substring(0, 197) + "..." : this.props.data.description_highlighted
         this.state = {
             title: this.props.data.title_highlighted,
             publisher: this.props.data.publisher_highlighted,
@@ -63,7 +61,7 @@ class PodcastResult extends Component {
             rss: this.props.data.rss,
             listennotesUrl: this.props.data.listennotes_url,
             itunesId: this.props.data.itunes_id,
-            description: truncated_description
+            description: this.props.data.description_highlighted
         }
     }
 
