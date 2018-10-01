@@ -3,7 +3,9 @@
 ![Apache 2](https://img.shields.io/hexpm/l/plug.svg) 
 ![Build Status](https://travis-ci.com/ListenNotes/ListenApiDemo.svg?branch=master)
 
-A simplified podcast search engine web app, using Django, React, and [Listen API](https://www.listennotes.com/api/)
+A simplified podcast search engine web app, using Django, React, and [Listen API](https://www.listennotes.com/api/).
+
+<a href="https://www.listennotes.com/api/"><img src="https://raw.githubusercontent.com/ListenNotes/ListenApiDemo/master/web/src/powered_by_listennotes.png" width="300" /></a>
 
 ## Running the project
 
