@@ -16,7 +16,7 @@ def search(request):
 
     if cache.get('quota_exceeded', False):
         head_response = requests.head(
-                'https://listennotes.p.mashape.com/api/v1/search',
+                'https://api.listennotes.com/api/v1/search',
                 headers={
                     'X-Mashape-Key': MASHAPE_KEY,
                     'Accept': 'application/json'
