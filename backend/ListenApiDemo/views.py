@@ -4,7 +4,7 @@ from django.views.decorators.http import require_http_methods
 import os
 import requests
 
-MASHAPE_KEY = os.environ.get('MASHAPE_KEY', '')
+RAPID_API_KEY = os.environ.get('RAPID_API_KEY', '')
 
 
 @require_http_methods(['GET'])
@@ -18,7 +18,7 @@ def search(request):
         head_response = requests.head(
                 'https://api.listennotes.com/api/v1/search',
                 headers={
-                    'X-Mashape-Key': MASHAPE_KEY,
+                    'X-RapidAPI-Key': RAPID_API_KEY,
                     'Accept': 'application/json'
                     }
                 )
@@ -29,7 +29,7 @@ def search(request):
 
     response = requests.get('https://listennotes.p.mashape.com/api/v1/search?q={}&sort_by_date={}&type={}&offset={}'.format(query, sort_by_date, result_type, offset),
                             headers={
-                                'X-Mashape-Key': MASHAPE_KEY,
+                                'X-RapidAPI-Key': RAPID_API_KEY,
                                 'Accept': 'application/json'
                                 }
                             )
