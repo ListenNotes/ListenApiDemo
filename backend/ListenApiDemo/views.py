@@ -1,8 +1,10 @@
-from django.http import JsonResponse, HttpResponse
-from django.core.cache import cache
-from django.views.decorators.http import require_http_methods
 import os
 import requests
+
+from django import http
+from django.core.cache import cache
+from django.views.decorators.http import require_http_methods
+
 
 LISTEN_API_KEY = os.environ.get('LISTEN_API_KEY', '')
 BASE_URL = 'https://listen-api.listennotes.com/api/v2'
@@ -25,7 +27,7 @@ def search(request):
             })
 
         if int(head_response.headers['X-ListenAPI-Usage']) > int(head_response.headers['X-ListenAPI-FreeQuota']):
-            return HttpResponse(status=429)
+            return http.HttpResponse(status=429)
         else:
             cache.set('quota_exceeded', False)
 
@@ -39,4 +41,4 @@ def search(request):
     if int(response.headers['X-ListenAPI-Usage']) > int(response.headers['X-ListenAPI-FreeQuota']):
         cache.set('quota_exceeded', True)
 
-    return JsonResponse(response.json())
+    return http.JsonResponse(response.json())
