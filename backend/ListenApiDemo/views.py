@@ -4,7 +4,8 @@ from django.views.decorators.http import require_http_methods
 import os
 import requests
 
-RAPID_API_KEY = os.environ.get('RAPID_API_KEY', '')
+LISTEN_API_KEY = os.environ.get('LISTEN_API_KEY', '')
+BASE_URL = 'https://listen-api.listennotes.com/api/v2'
 
 
 @require_http_methods(['GET'])
@@ -15,24 +16,27 @@ def search(request):
     offset = request.GET.get('offset', '0')
 
     if cache.get('quota_exceeded', False):
+        # Listen API won't bill HEAD requests. You can use HEAD requests to check API usage.
         head_response = requests.head(
-                'https://api.listennotes.com/api/v1/search',
-                headers={
-                    'X-RapidAPI-Key': RAPID_API_KEY,
-                    'Accept': 'application/json'
-                    }
-                )
-        if 'X-Ratelimit-full-text-search-quota-Remaining' in head_response.headers and head_response.headers['X-Ratelimit-full-text-search-quota-Remaining'] == 0:
+            '%s/search' % BASE_URL,
+            headers={
+                'X-ListenAPI-Key': LISTEN_API_KEY,
+                'Accept': 'application/json',
+            })
+
+        if int(head_response.headers['X-ListenAPI-Usage']) > int(head_response.headers['X-ListenAPI-FreeQuota']):
             return HttpResponse(status=429)
         else:
             cache.set('quota_exceeded', False)
 
-    response = requests.get('https://listennotes.p.mashape.com/api/v1/search?q={}&sort_by_date={}&type={}&offset={}'.format(query, sort_by_date, result_type, offset),
-                            headers={
-                                'X-RapidAPI-Key': RAPID_API_KEY,
-                                'Accept': 'application/json'
-                                }
-                            )
-    if 'X-Ratelimit-full-text-search-quota-Remaining' in response.headers and response.headers['X-Ratelimit-full-text-search-quota-Remaining'] == 0:
+    response = requests.get(
+        '{}/search?q={}&sort_by_date={}&type={}&offset={}'.format(BASE_URL, query, sort_by_date, result_type, offset),
+        headers={
+            'X-ListenAPI-Key': LISTEN_API_KEY,
+            'Accept': 'application/json'
+        })
+
+    if int(response.headers['X-ListenAPI-Usage']) > int(response.headers['X-ListenAPI-FreeQuota']):
         cache.set('quota_exceeded', True)
+
     return JsonResponse(response.json())
