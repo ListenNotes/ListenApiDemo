@@ -16,7 +16,7 @@ The backend is a simple Django backend makes requests to the Listen API. To run 
 1. Install requirements (it is recommended you do this in a virtualenv): `pip install -r requirements.txt`
 1. Start the django app with the environment variable LISTEN_API_KEY set to your Listen API key: `LISTEN_API_KEY=YOUR_SECRET_KEY python manage.py runserver`
 
-[Where to get LISTEN_API_KEY](https://www.listennotes.com/api/)?
+[Where to get LISTEN_API_KEY](https://www.listennotes.com/api/docs/)?
 
 ### Web (React)
 
