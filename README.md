@@ -5,6 +5,8 @@
 
 A simplified podcast search engine web app, using Django, React, and [Listen API](https://www.listennotes.com/api/).
 
+Note: You can easily implement similar apps using no code tools like [Bubble](https://www.listennotes.com/integrations/bubble/) and [Retool](https://www.listennotes.com/integrations/retool/).
+
 <a href="https://www.listennotes.com/api/"><img src="https://raw.githubusercontent.com/ListenNotes/ListenApiDemo/master/web/src/powered_by_listennotes.png" width="300" /></a>
 
 ## Running the project
