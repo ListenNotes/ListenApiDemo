@@ -79,7 +79,7 @@ REACT_APP_BACKEND_ROOT_URL=http://localhost:8000 yarn start
 
 ## Further readings
 
-* [Listen API Documentation]
+* [Listen API Documentation](https://www.listennotes.com/api/docs/)
 * [Tutorials](https://www.listennotes.com/api/tutorials/)
 * [Who's using Listen API?](https://www.listennotes.com/api/apps/)
 * [General FAQ](https://www.listennotes.com/api/faq/)
