@@ -12,13 +12,14 @@ Note: You can easily implement similar apps using no code tools like [Bubble](ht
 ## Overview
 
 Your frontend code (e.g., Web, iOS, Android...) shouldn't talk to Listen API directly.
-For Web, users can inspect request headers in their web browsers to find your API key, if you use Ajax to hit Listen API endpoints directly.
+For Web, your users can inspect request headers in their web browsers to find your API key, 
+if you use Ajax to hit Listen API endpoints directly.
 For iOS / Android, you can't easily reset your API key, if you put API keys in the source code of your app. 
-Once your app is in the hands of users, you can't easily change the code or force users to upgrade.
+Once the app is in the hands of your users, you can't easily change the code or force users to upgrade.
 
 Typically, you'll hit Listen API endpoints from your backend (e.g., Django, Rails, Nodejs, Cloudflare Workers...). 
 So you can protect your API key and reset it if needed. 
-Your frontend code will talk to your backend (e.g., GraphQL, RESTful APIs).
+Your frontend code will talk to your backend via GraphQL, RESTful APIs or the likes.
 
 In this demo, we provide a reference Django implementation for a backend that talks to Listen API, 
 and a ReactJs implementation for a web frontend that talks to the Django backend.
