@@ -11,4 +11,4 @@ pyflakes==1.6.0
 pytz==2018.5
 requests==2.25.1
 sqlparse==0.4.1
-urllib3==1.23
+urllib3==1.24.2
