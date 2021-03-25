@@ -46,7 +46,7 @@ LISTEN_API_KEY=YOUR_SECRET_KEY python manage.py runserver
 [Where to get LISTEN_API_KEY](https://help.listennotes.com/en/articles/3416436-how-to-get-an-api-token-of-listen-notes-api)?
 
 
-You can also use `LISTEN_API_TEST=1` to hit our API mock server for testing. You don't need to use an API key here.
+You can also use `LISTEN_API_TEST=1` to hit our [API mock server](https://www.listennotes.com/api/tutorials/#faq0) for testing. You don't need to use an API key here.
    
 ```
 LISTEN_API_TEST=1 python manage.py runserver
@@ -76,3 +76,10 @@ REACT_APP_BACKEND_ROOT_URL=http://localhost:8000 yarn start
 *On mobile*
 
 <img src="https://github.com/wenbinf/ListenApiDemo/blob/master/resources/mobile.png" alt="Mobile demo" width="300">
+
+## Further readings
+
+* [Listen API Documentation]
+* [Tutorials](https://www.listennotes.com/api/tutorials/)
+* [Who's using Listen API?](https://www.listennotes.com/api/apps/)
+* [General FAQ](https://www.listennotes.com/api/faq/)
