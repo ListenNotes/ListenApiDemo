@@ -7,7 +7,11 @@ from django.views.decorators.http import require_http_methods
 
 
 LISTEN_API_KEY = os.environ.get('LISTEN_API_KEY', '')
-BASE_URL = 'https://listen-api.listennotes.com/api/v2'
+if not os.environ.get('LISTEN_API_TEST'):
+    BASE_URL = 'https://listen-api.listennotes.com/api/v2'
+else:
+    # Use API mock server
+    BASE_URL = 'https://listen-api-test.listennotes.com/api/v2'
 
 
 @require_http_methods(['GET'])
@@ -26,7 +30,8 @@ def search(request):
                 'Accept': 'application/json',
             })
 
-        if int(head_response.headers['X-ListenAPI-Usage']) > int(head_response.headers['X-ListenAPI-FreeQuota']):
+        h = head_response.headers
+        if int(h.get('X-ListenAPI-Usage', 0)) > int(h.get('X-ListenAPI-FreeQuota', 0)):
             return http.HttpResponse(status=429)
         else:
             cache.set('quota_exceeded', False)
@@ -38,7 +43,7 @@ def search(request):
             'Accept': 'application/json'
         })
 
-    if int(response.headers['X-ListenAPI-Usage']) > int(response.headers['X-ListenAPI-FreeQuota']):
+    if int(response.headers.get('X-ListenAPI-Usage', 0)) > int(response.headers.get('X-ListenAPI-FreeQuota', 0)):
         cache.set('quota_exceeded', True)
 
     return http.JsonResponse(response.json())
