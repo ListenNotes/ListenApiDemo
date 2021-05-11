@@ -5,6 +5,18 @@
 
 A simplified podcast search engine web app, using Django, React, and [Listen API](https://www.listennotes.com/api/).
 
+In the Django code, we use our [official podcast api package](https://github.com/ListenNotes/podcast-api-python) to talk to
+Listen API.
+
+You can find code snippets in different languages on the [API Docs](https://www.listennotes.com/api/docs/) page, 
+including [Node.js](https://github.com/ListenNotes/podcast-api-js), 
+[Python](https://github.com/ListenNotes/podcast-api-python), 
+[Ruby](https://github.com/ListenNotes/podcast-api-ruby), 
+[Java](https://github.com/ListenNotes/podcast-api-java), 
+[PHP](https://github.com/ListenNotes/podcast-api-php), 
+[Golang](https://github.com/ListenNotes/podcast-api-go), 
+[Kotlin](https://github.com/ListenNotes/podcast-api-kotlin)...
+
 Note: You can easily implement similar apps using no code tools like [Bubble](https://www.listennotes.com/integrations/bubble/) and [Retool](https://www.listennotes.com/integrations/retool/).
 
 <a href="https://www.listennotes.com/api/"><img src="https://raw.githubusercontent.com/ListenNotes/ListenApiDemo/master/web/src/powered_by_listennotes.png" width="300" /></a>
@@ -46,11 +58,7 @@ LISTEN_API_KEY=YOUR_SECRET_KEY python manage.py runserver
 [Where to get LISTEN_API_KEY](https://help.listennotes.com/en/articles/3416436-how-to-get-an-api-token-of-listen-notes-api)?
 
 
-You can also use `LISTEN_API_TEST=1` to hit our [API mock server](https://www.listennotes.com/api/tutorials/#faq0) for testing. You don't need to use an API key here.
-   
-```
-LISTEN_API_TEST=1 python manage.py runserver
-```
+If LISTEN_API_KEY is not set, then we'll use the [API mock server](https://www.listennotes.com/api/tutorials/#faq0) that returns fake data.
 
 
 ### [Web (React)](https://github.com/ListenNotes/ListenApiDemo/tree/master/web)

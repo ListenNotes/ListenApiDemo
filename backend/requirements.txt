@@ -6,6 +6,7 @@ django-cors-headers==3.7.0
 flake8==3.5.0
 idna==2.7
 mccabe==0.6.1
+podcast-api==1.0.12
 pycodestyle==2.3.1
 pyflakes==1.6.0
 pytz==2018.5
