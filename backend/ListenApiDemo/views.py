@@ -8,6 +8,7 @@ from listennotes import podcast_api, errors
 
 LISTEN_API_KEY = os.environ.get('LISTEN_API_KEY')
 
+
 @require_http_methods(['GET'])
 def search(request):
     q = request.GET.get('q')
