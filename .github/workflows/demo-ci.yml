@@ -1,0 +1,41 @@
+name: Demo CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+        node-version: [16.x]
+  
+    steps:
+    - uses: actions/checkout@v2
+    - name: Lint javascript code
+      uses: borales/actions-yarn@v2.3.0
+      with:
+        cmd: --cwd web run lint # will run `yarn run lint` command
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+        cache-dependency-path: 'backend/requirements.txt'
+    - name: Install python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        cat backend/requirements.txt | grep -v '#' | xargs -n 1 pip install
+      continue-on-error: false
+    - name: Run flake
+      run: |
+        cd backend && flake8 backend
+      continue-on-error: false      
+    
