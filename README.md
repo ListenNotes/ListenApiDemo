@@ -1,7 +1,7 @@
 # ListenApiDemo
 
 ![Apache 2](https://img.shields.io/hexpm/l/plug.svg) 
-![Build Status](https://travis-ci.com/ListenNotes/ListenApiDemo.svg?branch=master)
+[![Demo CI](https://github.com/ListenNotes/ListenApiDemo/actions/workflows/demo-ci.yml/badge.svg)](https://github.com/ListenNotes/ListenApiDemo/actions/workflows/demo-ci.yml)
 
 A simplified podcast search engine web app, using Django, React, and [Listen API](https://www.listennotes.com/api/).
 
