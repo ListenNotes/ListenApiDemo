@@ -91,3 +91,15 @@ REACT_APP_BACKEND_ROOT_URL=http://localhost:8000 yarn start
 * [Tutorials](https://www.listennotes.com/api/tutorials/)
 * [Who's using Listen API?](https://www.listennotes.com/api/apps/)
 * [General FAQ](https://www.listennotes.com/api/faq/)
+
+What have 4,500+ companies & developers built with Listen Notes Podcast API:
+
+*   [E-Learning Platforms](https://www.listennotes.com/use-cases/elearning-platforms/)
+*   [Podcast Clipping Apps](https://www.listennotes.com/use-cases/podcast-clipping-apps/)
+*   [Podcast Listening Apps](https://www.listennotes.com/use-cases/podcast-listening-apps/)
+*   [Podcast Social Apps](https://www.listennotes.com/use-cases/podcast-social-apps/)
+*   [Podcast PR / Advertising Platforms](https://www.listennotes.com/use-cases/podcast-pr-advertising-platforms/)
+*   [Podcast Curation Apps](https://www.listennotes.com/use-cases/podcast-curation-apps/)
+*   [Financial Market Intelligence Platforms](https://www.listennotes.com/use-cases/financial-market-intelligence-platforms/)
+*   [Podcast Hosting Services](https://www.listennotes.com/use-cases/podcast-hosting-services/)
+*   and [more](https://www.listennotes.com/api/apps/)...
