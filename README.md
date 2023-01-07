@@ -91,6 +91,7 @@ REACT_APP_BACKEND_ROOT_URL=http://localhost:8000 yarn start
 * [Tutorials](https://www.listennotes.com/api/tutorials/)
 * [Who's using Listen API?](https://www.listennotes.com/api/apps/)
 * [General FAQ](https://www.listennotes.com/api/faq/)
+* [How to evaluate a 3rd party RESTful API?](https://www.listennotes.com/blog/how-to-evaluate-a-3rd-party-restful-api-47/)
 
 What have 4,500+ companies & developers built with Listen Notes Podcast API:
 
