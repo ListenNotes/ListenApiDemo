@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.less';
 import axios from 'axios'
-import poweredByImage from './assets/powered_by_listennotes.png';
+import poweredByImage from './powered_by_listennotes.png';
 
 const BACKEND_ROOT_URL = 'http://localhost:8000'
 const RESULTS_PER_PAGE = 10
