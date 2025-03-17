@@ -3,7 +3,7 @@
 ![Apache 2](https://img.shields.io/hexpm/l/plug.svg) 
 [![Demo CI](https://github.com/ListenNotes/ListenApiDemo/actions/workflows/demo-ci.yml/badge.svg)](https://github.com/ListenNotes/ListenApiDemo/actions/workflows/demo-ci.yml)
 
-A simplified podcast search engine web app, using Django, React, and [Listen API](https://www.listennotes.com/api/).
+A simplified podcast search engine web app, using Django, React, and [PodcastAPI.com](https://www.PodcastAPI.com/).
 
 In the Django code, we use our [official podcast api package](https://github.com/ListenNotes/podcast-api-python) to talk to
 Listen API.
@@ -40,7 +40,7 @@ and a ReactJs implementation for a web frontend that talks to the Django backend
 
 ### [Backend (Django)](https://github.com/ListenNotes/ListenApiDemo/tree/master/backend)
 
-The backend is a simple Django backend makes requests to the Listen API. To run it, from the `backend` directory:
+The backend is a simple Django backend makes requests to the Podcast API. To run it, from the `backend` directory:
 
 1. Install requirements (it is recommended you do this in a virtualenv):
 
@@ -52,7 +52,7 @@ pip install -r requirements.txt
 2. Start the django app with the environment variable LISTEN_API_KEY set to your Listen API key: 
    
 ```
-LISTEN_API_KEY=YOUR_SECRET_KEY python manage.py runserver
+LISTEN_API_KEY=YOUR_SECRET_KEY python manage.py runserver localhost:8888
 ```
 
 [Where to get LISTEN_API_KEY](https://help.listennotes.com/en/articles/3416436-how-to-get-an-api-token-of-listen-notes-api)?
@@ -74,8 +74,10 @@ yarn install
 2. Start the React app with the environment variable REACT_APP_BACKEND_ROOT_URL set to your Django backend's base url:
    
 ```
-REACT_APP_BACKEND_ROOT_URL=http://localhost:8000 yarn start
+yarn dev
 ```
+
+Now you can access the web app at `http://localhost:5173`
 
 *On desktop*
 
@@ -93,7 +95,7 @@ REACT_APP_BACKEND_ROOT_URL=http://localhost:8000 yarn start
 * [General FAQ](https://www.listennotes.com/api/faq/)
 * [How to evaluate a 3rd party RESTful API?](https://www.listennotes.com/blog/how-to-evaluate-a-3rd-party-restful-api-47/)
 
-What have 4,500+ companies & developers built with Listen Notes Podcast API:
+What have 9,000+ companies & developers built with Listen Notes Podcast API:
 
 *   [E-Learning Platforms](https://www.listennotes.com/use-cases/elearning-platforms/)
 *   [Podcast Clipping Apps](https://www.listennotes.com/use-cases/podcast-clipping-apps/)

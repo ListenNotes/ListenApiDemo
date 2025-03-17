@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.less';
 import axios from 'axios'
-import poweredByImage from './powered_by_listennotes.png';
+import poweredByImage from './assets/powered_by_listennotes.png';
 
-const BACKEND_ROOT_URL = process.env.REACT_APP_BACKEND_ROOT_URL || 'http://localhost:8000'
+const BACKEND_ROOT_URL = 'http://localhost:8000'
 const RESULTS_PER_PAGE = 10
 
 class EpisodeResult extends Component {
@@ -124,14 +124,14 @@ class App extends Component {
       }))})
       .catch(error => {
         if (error.response.status === 429) {
-          this.setState(prevState => ({
+          this.setState(() => ({
             data: [],
             offset: 0,
             quotaExceeded: true,
             errorOccurred: false
           }))
         } else {
-          this.setState(prevState => ({
+          this.setState(() => ({
             data: [],
             offset: 0,
             quotaExceeded: false,
@@ -141,7 +141,7 @@ class App extends Component {
       })
   }
 
-  handlePage(offset) {
+  handlePage() {
     const requestUrl = `${BACKEND_ROOT_URL}/search/?q=${this.state.search}&sort_by_date=${this.state.sortByDate}&type=${this.state.searchType}&offset=${this.state.data.next_offset}`
     this.search(requestUrl)
   }
